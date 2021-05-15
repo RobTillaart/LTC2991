@@ -74,7 +74,7 @@ LTC2991::LTC2991(const int8_t address, TwoWire *wire)
 
 
 #if defined (ESP8266) || defined(ESP32)
-bool LTC2991::begin(uint8_t sda, uint8_t scl)
+bool LTC2991::begin(const uint8_t sda, const uint8_t scl)
 {
   _wire = &Wire;
   _wire->begin(sda, scl);
@@ -134,6 +134,12 @@ bool LTC2991::is_busy()
 //
 // EXTERNAL CHANNELS  (8 voltage or 4 temperature)
 //
+void LTC2991::trigger_conversion_all()
+{
+  _setRegisterMask(STATUS_HIGH, 0xF0);
+}
+
+
 void LTC2991::enable(uint8_t n, bool enable)
 {
   if (enable) _setRegisterMask(STATUS_HIGH, (0x08 << n));
@@ -344,7 +350,6 @@ float LTC2991::get_value(uint8_t channel)
 
 
 
-
 //////////////////////////////////////////////////////////////////
 //
 // PWM functions
@@ -355,6 +360,16 @@ void LTC2991::set_PWM(uint16_t value)
   _writeRegister(PWM_THRESHOLD_MSB, value >> 1);
   if (value & 0x01) _setRegisterMask(PWM_THRESHOLD_LSB, 0x80);
   else              _clrRegisterMask(PWM_THRESHOLD_LSB, 0x80);
+}
+
+
+void LTC2991::set_PWM_fast(uint16_t value)
+{
+  if (value > 511) value = 511;
+  _writeRegister(PWM_THRESHOLD_MSB, value >> 1);
+  // last bit is never set, only when value is zero
+  // to be sure there is no dangling bit.
+  if (value == 0) _clrRegisterMask(PWM_THRESHOLD_LSB, 0x80);
 }
 
 
@@ -521,6 +536,7 @@ uint8_t LTC2991::_readRegister(const uint8_t reg)
   return _wire->read();
 }
 
+
 uint16_t LTC2991::_readRegister16(const uint8_t reg)
 {
   uint16_t x = _readRegister(reg) << 8;
@@ -530,19 +546,26 @@ uint16_t LTC2991::_readRegister16(const uint8_t reg)
   return x;
 }
 
+
 void LTC2991::_setRegisterMask(const uint8_t reg, uint8_t mask)
 {
   uint8_t x = _readRegister(reg);
-  x |= mask;
-  _writeRegister(reg, x);
+  if ((x & mask) != mask)   // if not all bits set, set them
+  {
+    x |= mask;
+    _writeRegister(reg, x);
+  }
 }
 
 
 void LTC2991::_clrRegisterMask(const uint8_t reg, uint8_t mask)
 {
   uint8_t x = _readRegister(reg);
-  x &= ~mask;
-  _writeRegister(reg, x);
+  if (x | mask)         // if any bit of the mask set clear it
+  {
+    x &= ~mask;
+    _writeRegister(reg, x);
+  }
 }
 
 uint8_t LTC2991::_getRegisterMask(const uint8_t reg, uint8_t mask)

@@ -20,7 +20,7 @@ public:
   explicit LTC2991(const int8_t address, TwoWire *wire = &Wire);
 
 #if defined (ESP8266) || defined(ESP32)
-  bool    begin(uint8_t sda, uint8_t scl);
+  bool    begin(const uint8_t sda, const uint8_t scl);
 #endif
 
   bool    begin();
@@ -34,44 +34,47 @@ public:
   bool    new_voltage();              // VCC
   bool    is_busy();
 
+
   //
-  // EXTERNAL CHANNELS  (8 voltage or 4 temperature)
+  // EXTERNAL CHANNELS  (8 voltage, 4 differentials or 4 temperature)
   //
   // n = 1 ==> V1 V2  T1
   // n = 2 ==> V3 V4  T2
   // n = 3 ==> V5 V6  T3
   // n = 4 ==> V7 V8  T4
+  void    trigger_conversion(uint8_t n) { enable(n, true); };
+  void    trigger_conversion_all();
   void    enable(uint8_t n, bool enable);
   bool    is_enabled(uint8_t n);
+
 
   // REGISTER 0x06 .. 0x07
   //    n: 1..4
   void    enable_filter(uint8_t n, bool enable);
   bool    is_enabled_filter(uint8_t n);
-  void    set_Kelvin(uint8_t n);  // implicit set_mode_temperature
-  void    set_Celsius(uint8_t n); // implicit set_mode_temperature
-  void    set_temp_scale(uint8_t n, bool Kelvin = true);  // MIGHT BECOME OBSOLETE ?
+  void    set_Kelvin(uint8_t n);      // implicit set_mode_temperature
+  void    set_Celsius(uint8_t n);     // implicit set_mode_temperature
+  void    set_temp_scale(uint8_t n, bool Kelvin = true);
   //      returns 'C' or 'K'
   char    get_temp_scale(uint8_t n);
   void    set_mode_temperature(uint8_t n);
   void    set_mode_voltage_differential(uint8_t n);
   void    set_mode_voltage_normal(uint8_t n);
-  uint8_t get_operational_mode(uint8_t n);
+  uint8_t get_operational_mode(uint8_t n);          // enumeration?
   uint8_t get_differential_mode(uint8_t n);
 
   // REGISTER 0x0A .. 0x19
   float    get_value(uint8_t channel);      // chan = 1..8
 
 
-
   //
   // PWM
   //
-  // REGISTER 0x08 .. 0x09
   // value = 0..511
-  void     set_PWM(uint16_t value);
+  void     set_PWM(uint16_t value = 0);
+  void     set_PWM_fast(uint16_t value = 0);   // less resolution
   uint16_t get_PWM();
-  void     invert_PWM(bool invert);
+  void     invert_PWM(bool invert = false);
   bool     is_inverted_PWM();
   void     enable_PWM(bool enable);
   bool     is_enabled_PWM();
@@ -97,9 +100,7 @@ public:
   void     set_temp_scale_Tintern(bool Kelvin = true);
   //      returns 'C' or 'K'
   char     get_temp_scale_Tintern();
-  // REGISTER 0x1A .. 0x1B
   float    get_Tintern();
-  // REGISTER 0x1C .. 0x1D
   float    get_VCC();
 
 

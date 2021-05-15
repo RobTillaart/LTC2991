@@ -1,6 +1,6 @@
 {
   "name": "LTC2991",
-  "keywords": "",
+  "keywords": "voltage temperature differential PWM",
   "description": "Arduino library for a LTC2991",
   "authors":
   [

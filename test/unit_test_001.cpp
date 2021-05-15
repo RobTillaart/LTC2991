@@ -32,7 +32,7 @@
 #include <ArduinoUnitTests.h>
 
 
-#include "rotaryDecoder.h"
+#include "LTC2991.h"
 
 
 
@@ -47,9 +47,9 @@ unittest_teardown()
 
 unittest(test_constructor)
 {
-  fprintf(stderr, "VERSION: %s\n", ROTARY_DECODER_LIB_VERSION);
+  fprintf(stderr, "VERSION: %s\n", LTC2991_LIB_VERSION);
 
-  rotaryDecoder(0x20);
+  LTC2991(0x20);
 
   fprintf(stderr, "no tests yet");
 }

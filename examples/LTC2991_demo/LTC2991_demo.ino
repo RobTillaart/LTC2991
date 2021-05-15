@@ -2,8 +2,7 @@
 //    FILE: LTC2991_demo.ino
 //  AUTHOR: Rob Tillaart
 //    DATE: 2021-05-10
-//
-// PUPROSE: demo
+// PUPROSE: detect device on I2C bus
 
 
 #include "Wire.h"
@@ -21,7 +20,11 @@ void setup()
   Wire.begin();
   Wire.setClock(100000);
   LTC.begin();
-
+  while (!LTC.isConnected())
+  {
+    Serial.println("Could not connect to device");
+    delay(2000);
+  }
 }
 
 

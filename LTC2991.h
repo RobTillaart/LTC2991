@@ -27,7 +27,6 @@ public:
   bool    isConnected();
 
 
-  // REGISTER 0x00 .. 0x01
   // channel = 1..8
   bool    new_data(uint8_t channel);  // external
   bool    new_temperature();          // internal
@@ -48,23 +47,19 @@ public:
   bool    is_enabled(uint8_t n);
 
 
-  // REGISTER 0x06 .. 0x07
   //    n: 1..4
   void    enable_filter(uint8_t n, bool enable);
   bool    is_enabled_filter(uint8_t n);
   void    set_Kelvin(uint8_t n);      // implicit set_mode_temperature
   void    set_Celsius(uint8_t n);     // implicit set_mode_temperature
   void    set_temp_scale(uint8_t n, bool Kelvin = true);
-  //      returns 'C' or 'K'
-  char    get_temp_scale(uint8_t n);
+  char    get_temp_scale(uint8_t n);         // returns 'C' or 'K'
   void    set_mode_temperature(uint8_t n);
   void    set_mode_voltage_differential(uint8_t n);
   void    set_mode_voltage_normal(uint8_t n);
   uint8_t get_operational_mode(uint8_t n);          // enumeration?
   uint8_t get_differential_mode(uint8_t n);
-
-  // REGISTER 0x0A .. 0x19
-  float    get_value(uint8_t channel);      // chan = 1..8
+  float   get_value(uint8_t channel);      // chan = 1..8
 
 
   //
@@ -98,8 +93,7 @@ public:
   void     set_Kelvin_Tintern()   { set_temp_scale_Tintern(true); };
   void     set_Celsius_Tintern()  { set_temp_scale_Tintern(false); };
   void     set_temp_scale_Tintern(bool Kelvin = true);
-  //      returns 'C' or 'K'
-  char     get_temp_scale_Tintern();
+  char     get_temp_scale_Tintern();         // returns 'C' or 'K'
   float    get_Tintern();
   float    get_VCC();
 

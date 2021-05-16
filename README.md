@@ -54,7 +54,7 @@ The following functions work on pairs
 |   4  | V7 V8  T4 |
 
 - **void trigger_conversion(uint8_t n)** wrapper around enable(n, true), better naming.
-- **void trigger_conversion_all(uint8_t n)** triggers all conversions.
+- **void trigger_conversion_all()** triggers conversions for all 4 channels/pairs.
 - **void enable(uint8_t n, bool enable)** enable or disable an external line. disable can be used to stop the repeat mode.
 - **bool is_enabled(uint8_t n)** idem
 - **void enable_filter(uint8_t n, bool enable)** enable filter - not investigated.

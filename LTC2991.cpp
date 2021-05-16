@@ -1,14 +1,15 @@
 //
 //    FILE: LTC2991.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 //    DATE: 2021-05-10
 // PURPOSE: Library for LTC2991 temperature and voltage control IC
 //     URL: https://github.com/RobTillaart/LTC2991
 //
 //  HISTORY:
 //  0.1.0   2021-05-10  initial version
-//  
+//  0.1.1   2021-05-16  add trigger_conversion(), set_PWM_fast() 
+//          performance optimizations, some default values, and cleanup.
 
 
 #include "LTC2991.h"

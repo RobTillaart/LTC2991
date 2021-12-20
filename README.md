@@ -8,7 +8,7 @@
 
 # LTC2991
 
-Arduino library for an LTC2991 temperature and voltage control IC
+Arduino library for an LTC2991 temperature and voltage control IC.
 
 
 ## Description

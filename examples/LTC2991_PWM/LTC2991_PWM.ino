@@ -1,7 +1,6 @@
 //
 //    FILE: LTC2991_PWM.ino
 //  AUTHOR: Rob Tillaart
-//    DATE: 2021-05-13
 // PUPROSE: demo
 
 
@@ -56,4 +55,4 @@ void loop()
 }
 
 
-// -- END OF FILE --
+//  -- END OF FILE --

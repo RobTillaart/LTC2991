@@ -1,7 +1,6 @@
 //
 //    FILE: LTC2991_read_temperature.ino
 //  AUTHOR: Rob Tillaart
-//    DATE: 2021-05-13
 // PUPROSE: demo
 
 
@@ -28,13 +27,13 @@ void setup()
 
   for (uint8_t channel = 1; channel <= 4; channel++)
   {
-    // enable all 4 temp sensors
+    //  enable all 4 temp sensors
     LTC.enable(channel, true);
     LTC.enable_filter(channel, false);
     LTC.set_Celsius(channel);
   }
 
-  // to get multiple readings in loop()
+  //  to get multiple readings in loop()
   LTC.set_acquisition_repeat();
 }
 
@@ -57,4 +56,4 @@ void loop()
 }
 
 
-// -- END OF FILE --
+//  -- END OF FILE --

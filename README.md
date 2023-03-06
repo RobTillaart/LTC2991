@@ -52,9 +52,10 @@ The address template is   0  1  0  0  - 1 A2 A1 A0  ==>  0x48 if all address pin
 #### Constructor and setup
 
 - **LTC2991(const uint8_t address, TwoWire \*wire = Wire)**
-THe address is 0x48..0x4F depending on the address pins.
-- **bool begin(const uint8_t sda, const uint8_t scl)** for ESP32 and ESP8266; initializes the class.
-sets I2C pins.
+The address is 0x48..0x4F depending on the address pins.
+The library does not check the range.
+- **bool begin(const uint8_t sda, const uint8_t scl)** for ESP32 and ESP8266.
+Initializes the class and sets the I2C pins.
 Returns true if the LTC2991 address is on the I2C bus.
 - **bool begin()** UNO ea. initializes the class.
 Returns true if the LTC2991 address is on the I2C bus.
@@ -116,7 +117,7 @@ depending on the operational mode it returns the temperature or the
 - **void set_Celsius_Tintern()** use Celsius.
 - **void set_temp_scale_Tintern(bool Kelvin = true)** Obsolete?.
 - **char get_temp_scale_Tintern()** returns 'K' or 'C'.
-- **float get_Tintern()** returns internal temperature.
+- **float get_Tintern()** returns the internal temperature.
 - **float get_VCC()** returns the internal voltage.
 
 
@@ -124,14 +125,17 @@ depending on the operational mode it returns the temperature or the
 
 - **void set_acquisition_repeat()** set continuous measurement mode.
 - **void set_acquisition_single()** set single shot mode.
-Note that before a measurement one needs to call trigger_conversion();
-- **uint8_t get_acquisition_mode()** return mode set (0,1)
+Note that before a measurement is made one needs to call **trigger_conversion(n)**
+or **trigger_conversion_all()**.
+- **uint8_t get_acquisition_mode()** return mode set (0,1).
+  - 1 = repeat
+  - 0 = single
 
 
 #### PWM functions
 
-- **void set_PWM(uint16_t value = 0)** value is 0..511
-- **void set_PWM_fast(uint16_t value = 0)** value is 0..511, less resolution (256 steps)
+- **void set_PWM(uint16_t value = 0)** value is 0..511.
+- **void set_PWM_fast(uint16_t value = 0)** value is 0..511, less resolution (256 steps).
 - **uint16_t get_PWM()** returns the value from the PWM register, when using PWM_fast this can differ 1.
 - **void invert_PWM(bool invert)** idem.
 - **bool is_inverted_PWM()** idem.
@@ -159,6 +163,7 @@ if you happen to have performance figures, please share them in an issue.
 - error handling
 - unit tests if possible?
 - remove magic numbers / masks from code
+  - some defines prepared in CPP file => to .h
 
 
 #### Could
@@ -168,15 +173,19 @@ if you happen to have performance figures, please share them in an issue.
 - optimizations
   - code / math
   - optimize multi-byte read / write
-- add Fahrenheit
-  - do low level in Kelvin and convert to KFC as needed.
-  - would simplify get_value
-  - need an enum
-  - would interface # functions increase too much?
+- **void disable_PWM()** convenience, 
+- **enable_PWM(bool)** default true flag
+- **void LTC2991::enable(uint8_t mask)** faster to set multiple.
 
 
 #### Wont
 
 - redo naming of some functions?
   - first get hands on experience.
+- add Fahrenheit
+  - do low level in Kelvin and convert to KFC as needed.
+  - would simplify get_value
+  - need an enum
+  - would interface # functions increase too much?
+  - == > Users can do this conversion.
 

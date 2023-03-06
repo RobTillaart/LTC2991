@@ -25,6 +25,12 @@ As the IC has only 8 inputs available one has to choose what.
 
 Read the datasheet for the details.
 
+#### Address
+
+From datasheet - table 1
+
+The address template is   0  1  0  0  - 1 A2 A1 A0  ==>  0x48 if all address pins are grounded,
+
 
 ## Interface
 
@@ -35,25 +41,28 @@ Read the datasheet for the details.
 #### Constructor and setup
 
 - **LTC2991(const uint8_t address, TwoWire \*wire = Wire)**
+THe address is 0x48..0x4F depending on the address pins.
 - **bool begin(const uint8_t sda, const uint8_t scl)** for ESP32 and ESP8266; initializes the class.
 sets I2C pins.
-returns true if the LTC2991 address is on the I2C bus.
+Returns true if the LTC2991 address is on the I2C bus.
 - **bool begin()** UNO ea. initializes the class.
-returns true if the LTC2991 address is on the I2C bus.
-- **bool isConnected()** returns true if the LTC2991 address is on the I2C bus.
+Returns true if the LTC2991 address is on the I2C bus.
+- **bool isConnected()** Returns true if the LTC2991 address is on the I2C bus.
+- **uint8_t getAddress()** Returns the address set in the constructor.
 
 
 #### Status functions
 
-- **bool new_data(uint8_t channel)** true if there is a new **external** measurement (temperature or voltage) available.
+- **bool new_data(uint8_t channel)** true if there is a new **external** measurement available.
+This can be a voltage or a temperature measurement.
 - **bool new_temperature()** true if there is a new **internal** temperature measurement available.
 - **bool new_voltage()** true, if there is a new **internal** voltage measurement available.
-- **bool is_busy()** true if converting...
+- **bool is_busy()** true if the sensor is converting...
 
 
 #### External measurements
 
-The following functions work on pairs
+The following functions work on pairs:
 
 |  n  |   selected   |
 |:---:|:------------:|
@@ -61,6 +70,7 @@ The following functions work on pairs
 |  2  |  V3  V4  T2  |
 |  3  |  V5  V6  T3  |
 |  4  |  V7  V8  T4  |
+
 
 - **void trigger_conversion(uint8_t n)** wrapper around enable(n, true), better naming.
 - **void trigger_conversion_all()** triggers conversions for all 4 channels/pairs.
@@ -129,14 +139,15 @@ if you happen to have performance figures, please share them in an issue.
 
 #### Must
 
-- improve documentation
 - get hardware to test
+- improve documentation (a lot)
 
 
 #### Should
 
 - error handling
 - unit tests if possible?
+- remove magic numbers / masks from code
 
 
 #### Could
@@ -154,6 +165,7 @@ if you happen to have performance figures, please share them in an issue.
 
 
 #### Wont
+
 - redo naming of some functions?
   - first get hands on experience.
 

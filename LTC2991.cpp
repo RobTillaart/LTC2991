@@ -1,7 +1,7 @@
 //
 //    FILE: LTC2991.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.4
+// VERSION: 0.1.5
 //    DATE: 2021-05-10
 // PURPOSE: Library for LTC2991 temperature and voltage control IC
 //     URL: https://github.com/RobTillaart/LTC2991
@@ -92,6 +92,12 @@ bool LTC2991::isConnected()
 {
   _wire->beginTransmission(_address);
   return ( _wire->endTransmission() == 0);
+}
+
+
+uint8_t LTC2991::getAddress()
+{
+  return _address;
 }
 
 
@@ -327,7 +333,7 @@ float LTC2991::get_value(uint8_t channel)
     {
       return TEMPERATURE_FACTOR * (float)v;
     }
-    //  CELSIUS neg two complements  (page 13, 2nd colom.)
+    //  CELSIUS neg two complements  (page 13, 2nd column.)
     v = (v^0x1FFF) + 1;
     return TEMPERATURE_FACTOR * (float)v * -1.0;
   }

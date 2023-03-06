@@ -31,6 +31,17 @@ From datasheet - table 1
 
 The address template is   0  1  0  0  - 1 A2 A1 A0  ==>  0x48 if all address pins are grounded,
 
+|  ADR0  |  ADR1  |  ADR2  |  address  |
+|:------:|:------:|:------:|:---------:|
+|   0    |    0   |    0   |    0x48   |
+|   1    |    0   |    0   |    0x49   |
+|   0    |    1   |    0   |    0x4A   |
+|   1    |    1   |    0   |    0x4B   |
+|   0    |    0   |    1   |    0x4C   |
+|   1    |    0   |    1   |    0x4D   |
+|   0    |    1   |    1   |    0x4E   |
+|   1    |    1   |    1   |    0x4F   |
+
 
 ## Interface
 

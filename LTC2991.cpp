@@ -62,7 +62,7 @@ const float DIODE_VOLTAGE_FACTOR = 2.5 / 65536;    //  2^16
 //
 //  CONSTRUCTORS
 //
-LTC2991::LTC2991(const int8_t address, TwoWire *wire)
+LTC2991::LTC2991(const uint8_t address, TwoWire *wire)
 {
   _address = address;
   _wire = wire;

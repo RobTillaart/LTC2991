@@ -16,7 +16,7 @@ Arduino library for an LTC2991 temperature and voltage control IC.
 
 ## Description
 
-Experimental - not tested myself, (no hardware)
+**Experimental**
 
 LTC2991 is an experimental library for the LTC2991 IC which is typically used
 to monitor temperature and voltage. It also has a PWM out to control e.g. a fan.
@@ -28,8 +28,18 @@ As the IC has only 8 inputs available one has to choose what.
 
 Read the datasheet for the details.
 
+The library is not tested by myself, (no hardware).
 
-#### Address
+
+### Breaking change 0.3.0
+
+In issue #14 it was reported that the negative values were not correct.
+This is fixed in 0.3.0.
+
+All pre-0.3.0 versions are obsolete now and should not be used.
+
+
+### Address
 
 From datasheet - table 1
 
@@ -47,7 +57,7 @@ The address template is   0  1  0  0  - 1 A2 A1 A0  ==>  0x48 if all address pin
 |   1    |    1   |    1   |    0x4F   |
 
 
-#### Related
+### Related
 
 - https://github.com/RobTillaart/LTC2991
 - https://github.com/RobTillaart/temperature converters
@@ -59,7 +69,7 @@ The address template is   0  1  0  0  - 1 A2 A1 A0  ==>  0x48 if all address pin
 #include "LTC2991.h"
 ```
 
-#### Constructor and setup
+### Constructor and setup
 
 - **LTC2991(const uint8_t address, TwoWire \*wire = Wire)**
 The address is 0x48..0x4F depending on the address pins.
@@ -71,7 +81,7 @@ Note: do call **Wire.begin()** before **begin()**
 - **uint8_t getAddress()** Returns the address set in the constructor.
 
 
-#### Status functions
+### Status functions
 
 - **bool new_data(uint8_t channel)** true if there is a new **external** measurement available.
 This can be a voltage or a temperature measurement.
@@ -80,7 +90,7 @@ This can be a voltage or a temperature measurement.
 - **bool is_busy()** true if the sensor is converting...
 
 
-#### External measurements
+### External measurements
 
 The following functions work on pairs:
 
@@ -115,12 +125,12 @@ depending on the operational mode it returns the temperature or the
 (differential) voltage.
 
 
-#### Internal measurements
+### Internal measurements
 
 - **void enable_Tintern_Vcc(bool enable)** enable internal temperature measurements.
 - **bool is_enabled_Tintern_Vcc()** idem.
 - **void enable_filter_Tintern(bool enable)** enable filter - not investigated
-- **bool is_enabled_filter_Tintern()**
+- **bool is_enabled_filter_Tintern()** idem.
 - **void set_Kelvin_Tintern()** use Kelvin.
 - **void set_Celsius_Tintern()** use Celsius.
 - **void set_temp_scale_Tintern(bool Kelvin = true)** Obsolete?.
@@ -129,7 +139,7 @@ depending on the operational mode it returns the temperature or the
 - **float get_VCC()** returns the internal voltage.
 
 
-#### Configuration
+### Configuration
 
 - **void set_acquisition_repeat()** set continuous measurement mode.
 - **void set_acquisition_single()** set single shot mode.
@@ -140,7 +150,7 @@ or **trigger_conversion_all()**.
   - 0 = single
 
 
-#### PWM functions
+### PWM functions
 
 - **void set_PWM(uint16_t value = 0)** value is 0..511.
 - **void set_PWM_fast(uint16_t value = 0)** value is 0..511, less resolution (256 steps).
@@ -151,7 +161,7 @@ or **trigger_conversion_all()**.
 - **bool is_enabled_PWM()** idem.
 
 
-#### Performance
+### Performance
 
 No data available yet.
 To be measured when hardware is available...

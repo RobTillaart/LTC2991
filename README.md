@@ -194,6 +194,7 @@ if you happen to have performance figures, please share them in an issue.
 - **void disable_PWM()** convenience, 
 - **enable_PWM(bool)** default true flag
 - **void LTC2991::enable(uint8_t mask)** faster to set multiple.
+- add Current functions (page 14 data sheet)
 
 
 #### Wont

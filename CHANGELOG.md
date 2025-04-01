@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - fix #14. fix negative values
 - added test sketch LTC2991_test_conversion.ino
 - fix **get_VCC()** as it cannot be negative
+- fix **get_PWM()** math
 - update readme.md
 - minor edits
 

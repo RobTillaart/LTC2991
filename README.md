@@ -92,7 +92,8 @@ This can be a voltage or a temperature measurement.
 
 ### External measurements
 
-The following functions work on pairs:
+The following functions work on pairs:  
+Note these functions do not use a zero based index.
 
 |  n  |   selected   |
 |:---:|:------------:|
@@ -101,7 +102,6 @@ The following functions work on pairs:
 |  3  |  V5  V6  T3  |
 |  4  |  V7  V8  T4  |
 
-
 - **void trigger_conversion(uint8_t n)** wrapper around enable(n, true), better naming.
 - **void trigger_conversion_all()** triggers conversions for all 4 channels/pairs.
 - **void enable(uint8_t n, bool enable)** enable or disable an external line.
@@ -109,17 +109,26 @@ disable can be used to stop the repeat mode.
 - **bool is_enabled(uint8_t n)** idem
 - **void enable_filter(uint8_t n, bool enable)** enable filter - not investigated.
 - **bool is_enabled_filter(uint8_t n)** idem.
+
+#### Temperature scale
+
 - **void set_Kelvin(uint8_t n)** sets temperature mode to Kelvin,
 implicit set_mode_temperature().
 - **void set_Celsius(uint8_t n)** sets temperature mode to Celsius,
 implicit set_mode_temperature.
 - **void set_temp_scale(uint8_t n, bool Kelvin = true)** used to switch between Kelvin and Celsius.
 - **char get_temp_scale(uint8_t n)** returns 'K' or 'C'.
+
+#### Mode
+
 - **void set_mode_temperature(uint8_t n)** sets operational mode.
 - **void set_mode_voltage_differential(uint8_t n)** sets operational mode.
 - **void set_mode_voltage_normal(uint8_t n)** sets operational mode.
 - **uint8_t get_operational_mode(uint8_t n)** returns operational mode.
 - **uint8_t get_differential_mode(uint8_t n)** returns differential flag.
+
+#### GetValue
+
 - **float get_value(uint8_t channel)** channel = 1..8;
 depending on the operational mode it returns the temperature or the
 (differential) voltage.
@@ -165,7 +174,7 @@ or **trigger_conversion_all()**.
 
 No data available yet.
 To be measured when hardware is available...
-if you happen to have performance figures, please share them in an issue.
+If you happen to have performance figures, please share them in an issue.
 
 
 ## Future

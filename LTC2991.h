@@ -63,7 +63,7 @@ public:
   //
   //  CORE functions
   //
-  //  channel = 1..8
+  //  channel = 1..8, note not zero based.
   bool    new_data(uint8_t channel);  //  external
   bool    new_temperature();          //  internal
   bool    new_voltage();              //  VCC
@@ -72,6 +72,7 @@ public:
 
   //
   //  EXTERNAL CHANNELS  (8 voltage, 4 differentials or 4 temperature)
+  //  note not zero based.
   //
   //      n = 1 ==> V1 V2  T1
   //      n = 2 ==> V3 V4  T2
@@ -84,7 +85,7 @@ public:
   bool    is_enabled(uint8_t n);
 
 
-  //      n: 1..4  see above
+  //      n = 1..4  see above
   void    enable_filter(uint8_t n, bool enable);
   bool    is_enabled_filter(uint8_t n);
 

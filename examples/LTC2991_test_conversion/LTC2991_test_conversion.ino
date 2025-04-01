@@ -9,24 +9,25 @@
 
 #include "Arduino.h"
 
-int16_t v;
 
 void setup()
 {
+  //  while(!Serial);  //  uncomment if needed
   Serial.begin(115200);
-  while (!Serial);
   Serial.println(__FILE__);
 
-  P(0x3FFF);
-  P(0x2CCD);
-  P(0x1FFF);
-  P(0x028F);
-  P(0x0001);
-  P(0x0000);
-  P(0x7C29);
-  P(0x7FFF);
-  P(0x4000);
+              //  expected voltage
+  P(0x3FFF);  //  > 5.0000
+  P(0x2CCD);  //  +3.5000
+  P(0x1FFF);  //  +2.5000
+  P(0x028F);  //  +0.2000
+  P(0x0001);  //  +0.000305
+  P(0x0000);  //   0.0000
+  P(0x7C29);  //  -0.3000
+  P(0x7FFF);  //  -0.000305
+  P(0x4000);  //  -5.0000
 }
+
 
 void P(int16_t val)
 {
@@ -48,10 +49,9 @@ void P(int16_t val)
 }
 
 
-
-
 void loop()
 {
 }
 
-// -- END OF FILE --
+
+//  -- END OF FILE --

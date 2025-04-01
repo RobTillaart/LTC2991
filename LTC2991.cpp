@@ -335,7 +335,7 @@ float LTC2991::get_value(uint8_t channel)
     }
     //  CELSIUS neg two complements  (page 13, 2nd column.)
     v = (v^0x1FFF) + 1;
-    return TEMPERATURE_FACTOR * (float)v * -1.0;
+    return (-1.0 * TEMPERATURE_FACTOR) * (float)v;
   }
 
   if (get_differential_mode(pair) == 0)  //  SINGLE ENDED
@@ -345,7 +345,7 @@ float LTC2991::get_value(uint8_t channel)
       return SINGLE_ENDED_FACTOR * (float)v;
     }
     v = (v^0x7FFF) + 1;
-    return SINGLE_ENDED_FACTOR * (float)v * -1.0;
+    return (-1.0 * SINGLE_ENDED_FACTOR) * (float)v;
   }
   //  DIFFERENTIAL
   if ((v & 0x4000) == 0)
@@ -353,7 +353,7 @@ float LTC2991::get_value(uint8_t channel)
     return DIFFERENTIAL_FACTOR * (float)v;
   }
   v = (v^0x7FFF) + 1;
-  return DIFFERENTIAL_FACTOR * (float)v * -1.0;
+  return (-1.0 * DIFFERENTIAL_FACTOR) * (float)v;
 }
 
 
@@ -384,7 +384,7 @@ uint16_t LTC2991::get_PWM()
 {
   uint16_t pwm = _readRegister(PWM_THRESHOLD_MSB);
   pwm <<= 1;
-  if (_readRegister(PWM_THRESHOLD_LSB) > 0 ) pwm |= 0x01;
+  if (_getRegisterMask(PWM_THRESHOLD_LSB, 0x80) > 0) pwm |= 0x01;
   return pwm;
 }
 
@@ -519,7 +519,7 @@ float LTC2991::get_Tintern()
   }
   //  CELSIUS neg two complements  (page 13, 2nd column)
   v = (v^0x1FFF) + 1;
-  return TEMPERATURE_FACTOR * (float)v * -1.0;
+  return (-1.0 * TEMPERATURE_FACTOR) * (float)v;
 }
 
 
